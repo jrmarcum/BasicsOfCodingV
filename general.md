@@ -1,0 +1,1 @@
+#### To run a program, make sure you are in the desired program folder then use the Run Command for the program. This works on Linux and Windows easily by navigating to the folder that the v program is in and right clicking on the mouse and selecting Open in Terminal before running the command.

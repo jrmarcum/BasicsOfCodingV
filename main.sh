@@ -1,0 +1,1 @@
+export PATH=~/vbyexample/v:$PATH
