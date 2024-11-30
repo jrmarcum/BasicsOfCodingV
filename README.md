@@ -1,4 +1,6 @@
 # Basics of Coding V
+## Preface
+What this text is and what it is not: This text is intended to introduce the reader to the basics of the V programming language in the sense that they will be able to write minimal types of programs and run the code. It is not intended to go into advanced topics like concurrency and use of pointers, data structures, object oriented programming, testing and debugging techniques and other software engineering principals.
 ## Statements
 A statement is an instruction that a program can execute. They are usually made line by line in your coding file. Lines in your code can have multiple statements that are separated typically by semicolons.
 ## Comments
