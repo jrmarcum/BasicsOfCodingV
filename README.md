@@ -13,7 +13,7 @@ V 0.4.8 e61475e
 ## Statements
 A statement is an instruction that a program can execute. They are usually made line by line in your coding file. Lines in your code can have multiple statements that are separated typically by semicolons.
 ## Comments
-Comments are used to document what your code is doing or potentially not doing so that if the code is non-performant, the code can be debugged or understood by others needing to review your code.
+Comments are used to document what your code does so that others can understand it when reviewing your code. Comments also document items that are non-performant in order to debug the code items at a later date.
 ## Keywords
 ## Operators
 > ### 1. Arithmetic Operators
