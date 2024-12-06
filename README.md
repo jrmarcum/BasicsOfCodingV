@@ -27,16 +27,13 @@ Comments are used to document what your code does so that others can understand 
 | static | struct     | true     | type     | typeof     | 
 | union  | unsafe     | volatile | __global | __offsetof |
 ## Operators
-> ### 1. Arithmetic Operators
->> a. **+**: add numbers
->>
->> b. **-**: subtract numbers
->>
->> c. **/**: divide one number by another
->>
->> d. **%**: remainder of dividing one number by another
->>
->> e. 
+### 1. Arithmetic Operators
+|       |             |
+|-------|-------------|
+| **+** | add numbers |
+| **-** | subtract numbers |
+| **/** | divide one number by another | 
+| **%** | remainder of dividing one number by another |
 ## Data Types
 
 > ### 1.  Variables
