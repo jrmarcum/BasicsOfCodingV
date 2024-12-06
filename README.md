@@ -15,6 +15,17 @@ A statement is an instruction that a program can execute. They are usually made 
 ## Comments
 Comments are used to document what your code does so that others can understand it when reviewing your code. Comments also document items that are non-performant in order to debug the code items at a later date.
 ## Keywords
+|        |            |          |          |            |
+|--------|------------|----------|----------|------------|
+| as     | asm        | assert   | atomic   | break      | 
+| const  | continue   | defer    | else     | enum       | 
+| false  | fn         | for      | go       | goto       |
+| if     | implements | import   | in       | interface  | 
+| is     | isreftype  | lock     | match    | module     | 
+| mut    | none       | or       | pub      | return     | 
+| rlock  | select     | shared   | sizeof   | spawn      | 
+| static | struct     | true     | type     | typeof     | 
+| union  | unsafe     | volatile | __global | __offsetof |
 ## Operators
 > ### 1. Arithmetic Operators
 >> a. **+**: add numbers
