@@ -1,69 +1,45 @@
-// V offers built-in support for XML and XML-like
-// formats with the `encoding.xml` package.
+// V does not include a standard XML encoding package equivalent to Go's
+// `encoding/xml`. This example demonstrates basic XML generation using
+// string interpolation — the idiomatic V approach for simple XML output.
 
-package main
-
-import (
-	"encoding/xml"
-	"fmt"
-)
-
-// Plant will be mapped to XML. Similarly to the
-// JSON examples, field tags contain directives for the
-// encoder and decoder. Here we use some special features
-// of the XML package: the `XMLName` field name dictates
-// the name of the XML element representing this struct;
-// `id,attr` means that the `Id` field is an XML
-// _attribute_ rather than a nested element.
-type Plant struct {
-	XMLName xml.Name `xml:"plant"`
-	Id      int      `xml:"id,attr"`
-	Name    string   `xml:"name"`
-	Origin  []string `xml:"origin"`
+struct Plant {
+	id     int
+	name   string
+	origin []string
 }
 
-func (p Plant) String() string {
-	return fmt.Sprintf("Plant id=%v, name=%v, origin=%v",
-		p.Id, p.Name, p.Origin)
+fn (p Plant) to_xml() string {
+	mut origins := ''
+	for o in p.origin {
+		origins += '    <origin>${o}</origin>\n'
+	}
+	return ' <plant id="${p.id}">\n  <name>${p.name}</name>\n${origins} </plant>'
 }
 
-func main() {
-	coffee := &Plant{Id: 27, Name: "Coffee"}
-	coffee.Origin = []string{"Ethiopia", "Brazil"}
+fn (p Plant) str() string {
+	return 'Plant id=${p.id}, name=${p.name}, origin=${p.origin}'
+}
 
-	// Emit XML representing our plant; using
-	// `MarshalIndent` to produce a more
-	// human-readable output.
-	out, _ := xml.MarshalIndent(coffee, " ", "  ")
-	fmt.Println(string(out))
+fn main() {
+	coffee := Plant{ id: 27, name: 'Coffee', origin: ['Ethiopia', 'Brazil'] }
 
-	// To add a generic XML header to the output, append
-	// it explicitly.
-	fmt.Println(xml.Header + string(out))
+	// Emit XML representing our plant.
+	println(coffee.to_xml())
 
-	// Use `Unmarhshal` to parse a stream of bytes with XML
-	// into a data structure. If the XML is malformed or
-	// cannot be mapped onto Plant, a descriptive error
-	// will be returned.
-	var p Plant
-	if err := xml.Unmarshal(out, &p); err != nil {
-		panic(err)
+	// Add a generic XML header.
+	println('<?xml version="1.0" encoding="UTF-8"?>')
+	println(coffee.to_xml())
+
+	// Print the struct.
+	println(coffee)
+
+	tomato := Plant{ id: 81, name: 'Tomato', origin: ['Mexico', 'California'] }
+
+	// Nest multiple plants.
+	mut nested := ' <nesting>\n  <parent>\n   <child>\n'
+	for p in [coffee, tomato] {
+		nested += '    ${p.to_xml()}\n'
 	}
-	fmt.Println(p)
-
-	tomato := &Plant{Id: 81, Name: "Tomato"}
-	tomato.Origin = []string{"Mexico", "California"}
-
-	// The `parent>child>plant` field tag tells the encoder
-	// to nest all `plant`s under `<parent><child>...`
-	type Nesting struct {
-		XMLName xml.Name `xml:"nesting"`
-		Plants  []*Plant `xml:"parent>child>plant"`
-	}
-
-	nesting := &Nesting{}
-	nesting.Plants = []*Plant{coffee, tomato}
-
-	out, _ = xml.MarshalIndent(nesting, " ", "  ")
-	fmt.Println(string(out))
+	nested += '   </child>\n  </parent>\n </nesting>'
+	println(nested)
 }

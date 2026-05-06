@@ -1,12 +1,10 @@
-// v has various value types including strings,
-// basic examples.
+// V has various value types including strings, integers, floats, and booleans.
 
 fn main() {
-
 	// Strings, which can be added together with `+`.
-	println("v" + "lang")
-	println("1+1 = ${1+1}")
-	println("7.0/3.0 = ${7.0/3.0}")
+	println('v' + 'lang')
+	println('1+1 = ${1 + 1}')
+	println('7.0/3.0 = ${7.0 / 3.0}')
 
 	// Booleans, with boolean operators as you'd expect.
 	println(true && false)

@@ -1,21 +1,17 @@
-___
-#### To run the program, make sure you are in the 18_structs folder then use the Run Command below. See `general.md` for useful information.
+#### V structs print field names and values; pointer output includes an `&` prefix.
 ___
 ##### Run Command:
 
 `$ v run structs.v`
 
-___
 ##### Results:
 
-`{Bob 20}`
-`{Alice 30}`
-`{Fred 0}`
-`&{Ann 40}`
-`&{Jon 42}`
+`Person{name: 'Bob', age: 20}`
+`Person{name: 'Alice', age: 30}`
+`Person{name: 'Fred', age: 0}`
+`&Person{name: 'Ann', age: 40}`
+`&Person{name: 'Jon', age: 42}`
 `Sean`
 `50`
 `51`
-___
-
-###### This work and the accompanying code was originally from Mark McGranaghan at [https://github.com/mmcgrana/gobyexample](https://github.com/mmcgrana/gobyexample) and licensed under a Creative Commons Attribution 3.0 Unported License [http://creativecommons.org/licenses/by/3.0/](http://creativecommons.org/licenses/by/3.0/). It has been used to provide an example base for multiple languages to provide a basis of comparitive programming language study for syntax, language simplicity, number of lines of code and operations required to perform the same task, as well as compile and run speed combined.
+`struct { name: 'Rex', is_good: true }`

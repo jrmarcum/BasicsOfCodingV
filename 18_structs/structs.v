@@ -1,53 +1,53 @@
 // V's _structs_ are typed collections of fields.
-// They're useful for grouping data together to form
-// records.
 
-package main
-
-import "fmt"
-
-// This `person` struct type has `name` and `age` fields.
-type person struct {
+struct Person {
 	name string
 	age  int
 }
 
-// `newPerson` constructs a new person struct with the given name.
-func newPerson(name string) *person {
-	// You can safely return a pointer to local variable
-	// as a local variable will survive the scope of the function.
-	p := person{name: name}
-	p.age = 42
-	return &p
+fn new_person(name string) &Person {
+	// You can safely return a pointer to a local variable — V manages memory.
+	return &Person{
+		name: name
+		age:  42
+	}
 }
 
-func main() {
-
+fn main() {
 	// This syntax creates a new struct.
-	fmt.Println(person{"Bob", 20})
+	println(Person{ name: 'Bob', age: 20 })
 
 	// You can name the fields when initializing a struct.
-	fmt.Println(person{name: "Alice", age: 30})
+	println(Person{ name: 'Alice', age: 30 })
 
 	// Omitted fields will be zero-valued.
-	fmt.Println(person{name: "Fred"})
+	println(Person{ name: 'Fred' })
 
 	// An `&` prefix yields a pointer to the struct.
-	fmt.Println(&person{name: "Ann", age: 40})
+	println(&Person{ name: 'Ann', age: 40 })
 
-	// It's idiomatic to encapsulate new struct creation in constructor functions
-	fmt.Println(newPerson("Jon"))
+	// It's idiomatic to encapsulate new struct creation in constructor functions.
+	println(new_person('Jon'))
 
 	// Access struct fields with a dot.
-	s := person{name: "Sean", age: 50}
-	fmt.Println(s.name)
+	mut s := Person{ name: 'Sean', age: 50 }
+	println(s.name)
 
-	// You can also use dots with struct pointers - the
-	// pointers are automatically dereferenced.
+	// You can also use dots with struct pointers — the pointer is automatically dereferenced.
 	sp := &s
-	fmt.Println(sp.age)
+	println(sp.age)
 
-	// Structs are mutable.
+	// Structs are mutable; use `mut` to modify fields.
 	sp.age = 51
-	fmt.Println(sp.age)
+	println(sp.age)
+
+	// Anonymous struct type.
+	dog := struct {
+		name  string
+		is_good bool
+	}{
+		name:   'Rex'
+		is_good: true
+	}
+	println(dog)
 }

@@ -1,35 +1,14 @@
-// A common requirement in programs is getting the number
-// of seconds, milliseconds, or nanoseconds since the
-// [Unix epoch](http://en.wikipedia.org/wiki/Unix_time).
-// Here's how to do it in V.
+import time
 
-package main
+fn main() {
+	now := time.now()
+	secs := now.unix_time()
+	millis := now.unix_time_milli()
+	println(now)
 
-import (
-	"fmt"
-	"time"
-)
+	println(secs)
+	println(millis)
 
-func main() {
-
-	// Use `time.Now` with `Unix` or `UnixNano` to get
-	// elapsed time since the Unix epoch in seconds or
-	// nanoseconds, respectively.
-	now := time.Now()
-	secs := now.Unix()
-	nanos := now.UnixNano()
-	fmt.Println(now)
-
-	// Note that there is no `UnixMillis`, so to get the
-	// milliseconds since epoch you'll need to manually
-	// divide from nanoseconds.
-	millis := nanos / 1000000
-	fmt.Println(secs)
-	fmt.Println(millis)
-	fmt.Println(nanos)
-
-	// You can also convert integer seconds or nanoseconds
-	// since the epoch into the corresponding `time`.
-	fmt.Println(time.Unix(secs, 0))
-	fmt.Println(time.Unix(0, nanos))
+	println(time.unix(secs))
+	println(time.unix(millis / 1000))
 }

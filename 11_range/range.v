@@ -1,48 +1,32 @@
-// _range_ iterates over elements in a variety of data
-// structures. Let's see how to use `range` with some
-// of the data structures we've already learned.
+// _range_ iterates over elements in a variety of data structures.
 
-package main
-
-import "fmt"
-
-func main() {
-
-	// Here we use `range` to sum the numbers in a slice.
-	// Arrays work like this too.
-	nums := []int{2, 3, 4}
-	sum := 0
-	for _, num := range nums {
+fn main() {
+	// Here we use `for` with `in` to sum the numbers in an array.
+	nums := [2, 3, 4]
+	mut sum := 0
+	for num in nums {
 		sum += num
 	}
-	fmt.Println("sum:", sum)
+	println('sum: ${sum}')
 
-	// `range` on arrays and slices provides both the
-	// index and value for each entry. Above we didn't
-	// need the index, so we ignored it with the
-	// blank identifier `_`. Sometimes we actually want
-	// the indexes though.
-	for i, num := range nums {
+	// `for i, val in array` provides both the index and the value.
+	for i, num in nums {
 		if num == 3 {
-			fmt.Println("index:", i)
+			println('index: ${i}')
 		}
 	}
 
-	// `range` on map iterates over key/value pairs.
-	kvs := map[string]string{"a": "apple", "b": "banana"}
-	for k, v := range kvs {
-		fmt.Printf("%s -> %s\n", k, v)
+	// `for k, v in map` iterates over key/value pairs in a map.
+	m := {
+		'a': 1
+		'b': 2
+	}
+	for k, v in m {
+		println('${k} -> ${v}')
 	}
 
-	// `range` can also iterate over just the keys of a map.
-	for k := range kvs {
-		fmt.Println("key:", k)
-	}
-
-	// `range` on strings iterates over Unicode code
-	// points. The first value is the starting byte index
-	// of the `rune` and the second the `rune` itself.
-	for i, c := range "go" {
-		fmt.Println(i, c)
+	// `for i, c in str` iterates over Unicode code points (runes) in a string.
+	for i, c in 'go' {
+		println('${i} ${int(c)}')
 	}
 }

@@ -1,43 +1,36 @@
-// _Maps_ are V's built-in [associative data type](http://en.wikipedia.org/wiki/Associative_array)
-// (sometimes called _hashes_ or _dicts_ in other languages).
+// _Maps_ are V's associative data type, equivalent to Go maps.
 
 fn main() {
-
-	// To create an empty map, use the builtin `make`:
-	// `make(map[key-type]val-type)`.
+	// To create an empty map, use `map[key_type]value_type{}`.
 	mut m := map[string]int{}
+	println('map: ${m}')
 
-	// Set key/value pairs using typical `name[key] = val`
-	// syntax.
+	// Set key/value pairs using the `map[key] = val` syntax.
 	m['k1'] = 7
 	m['k2'] = 13
+	println('map: ${m}')
 
-	// Printing a map with e.g. `fmt.Println` will show all of
-	// its key/value pairs.
-	println('map: $m')
+	// Printing a map will show all its key/value pairs.
+	println('v1: ${m['k1']}')
 
-	// Get a value for a key with `name[key]`.
-	v1 := m['k1']
-	println('v1: $v1')
+	// If a key doesn't exist the zero value of the value type is returned.
+	println('v3: ${m['k3']}')
 
-	// The builtin `len` returns the number of key/value
-	// pairs when called on a map.
+	// The built-in `len` returns the number of key/value pairs.
 	println('len: ${m.len}')
 
-	// The builtin `delete` removes key/value pairs from
-	// a map.
+	// `delete` removes key/value pairs from a map.
 	m.delete('k2')
-	println('map: $m')
+	println('map: ${m}')
 
-	// If getting a value from a map when the key
-	// is not present in the map, the key will produce
-	// a zero value by default. You can also use and or
-	// {} block to handle the missing keys.
-	prs1 := m['k2']
-	println('prs1: $prs1')
+	// The optional syntax `map[key] or {}` checks for key presence.
+	prs := 'k2' in m
+	println('prs: ${prs}')
 
-	// You can also declare and initialize a new map in
-	// the same line with this syntax.
-	n := {'foo': 1, 'bar': 2}
-	println('map: $n')
+	// You can also declare and initialize a new map in the same line.
+	n := {
+		'foo': 1
+		'bar': 2
+	}
+	println('map: ${n}')
 }

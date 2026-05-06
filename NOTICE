@@ -1,0 +1,27 @@
+Basics of Coding V
+Author: Jon Marcum
+
+This project is derived in part from "Basics of Coding Go" by Jon Marcum,
+which was itself derived from "Go by Example" by Mark McGranaghan.
+
+  Go by Example original project: https://github.com/mmcgrana/gobyexample
+  License: Creative Commons Attribution 3.0 Unported
+           http://creativecommons.org/licenses/by/3.0/
+
+  Basics of Coding Go: https://github.com/jrmarcum/BasicsOfCodingGo
+  Author: Jon Marcum
+  License: Creative Commons Attribution 3.0 Unported (derived content)
+           http://creativecommons.org/licenses/by/3.0/
+
+The lesson files and accompanying code examples in this repository that are
+adapted from those works are governed by the CC BY 3.0 license above.
+Attribution for all derived content is provided centrally in README.md and
+this NOTICE file, which satisfies the CC BY 3.0 attribution requirement.
+
+This adaptation was made for multi-language comparative study of syntax,
+language simplicity, lines of code, and runtime performance across
+programming languages.
+
+Original contributions by Jon Marcum (project structure, README, comparative
+study additions, and any lessons not derived from Go by Example) are
+dedicated to the public domain under CC0 1.0 Universal. See LICENSE.

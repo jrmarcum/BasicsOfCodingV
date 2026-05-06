@@ -1,0 +1,3 @@
+[submodule "upstream/basicsofcodinggo"]
+	path = upstream/basicsofcodinggo
+	url = https://github.com/jrmarcum/BasicsOfCodingGo

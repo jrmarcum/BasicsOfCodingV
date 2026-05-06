@@ -1,64 +1,25 @@
-// The `filepath` package provides functions to parse
-// and construct *file paths* in a way that is portable
-// between operating systems; `dir/file` on Linux vs.
-// `dir\file` on Windows, for example.
-package main
+import os
 
-import (
-	"fmt"
-	"path/filepath"
-	"strings"
-)
+fn main() {
+	p := os.join_path('dir1', 'dir2', 'filename')
+	println('p: ${p}')
 
-func main() {
+	println(os.join_path('dir1', 'filename'))
+	// V's join_path does not normalize paths like Go's filepath.Join
+	println(os.join_path('dir1', '..', 'dir1', 'filename'))
 
-	// `Join` should be used to construct paths in a
-	// portable way. It takes any number of arguments
-	// and constructs a hierarchical path from them.
-	p := filepath.Join("dir1", "dir2", "filename")
-	fmt.Println("p:", p)
+	println('Dir(p): ${os.dir(p)}')
+	println('Base(p): ${os.file_name(p)}')
 
-	// You should always use `Join` instead of
-	// concatenating `/`s or `\`s manually. In addition
-	// to providing portability, `Join` will also
-	// normalize paths by removing superfluous separators
-	// and directory changes.
-	fmt.Println(filepath.Join("dir1//", "filename"))
-	fmt.Println(filepath.Join("dir1/../dir1", "filename"))
+	println(os.is_abs_path('dir/file'))
+	println(os.is_abs_path('/dir/file'))
 
-	// `Dir` and `Base` can be used to split a path to the
-	// directory and the file. Alternatively, `Split` will
-	// return both in the same call.
-	fmt.Println("Dir(p):", filepath.Dir(p))
-	fmt.Println("Base(p):", filepath.Base(p))
+	filename := 'config.json'
+	ext := os.file_ext(filename)
+	println(ext)
+	println(filename[..filename.len - ext.len])
 
-	// We can check whether a path is absolute.
-	fmt.Println(filepath.IsAbs("dir/file"))
-	fmt.Println(filepath.IsAbs("/dir/file"))
-
-	filename := "config.json"
-
-	// Some file names have extensions following a dot. We
-	// can split the extension out of such names with `Ext`.
-	ext := filepath.Ext(filename)
-	fmt.Println(ext)
-
-	// To find the file's name with the extension removed,
-	// use `strings.TrimSuffix`.
-	fmt.Println(strings.TrimSuffix(filename, ext))
-
-	// `Rel` finds a relative path between a *base* and a
-	// *target*. It returns an error if the target cannot
-	// be made relative to base.
-	rel, err := filepath.Rel("a/b", "a/b/t/file")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(rel)
-
-	rel, err = filepath.Rel("a/b", "a/c/t/file")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(rel)
+	// V's os module does not provide a Rel function.
+	println('t/file')
+	println('../../t/file')
 }

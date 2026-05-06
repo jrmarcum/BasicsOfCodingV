@@ -1,42 +1,23 @@
-// Parsing numbers from strings is a basic but common task
-// in many programs; here's how to do it in V.
+import strconv
 
-package main
+fn main() {
+	f := strconv.atof64('1.234') or { panic(err) }
+	println(f)
 
-// The built-in package `strconv` provides the number
-// parsing.
-import (
-	"fmt"
-	"strconv"
-)
+	i := strconv.parse_int('123', 0, 64) or { panic(err) }
+	println(i)
 
-func main() {
+	d := strconv.parse_int('1c8', 16, 64) or { panic(err) }
+	println(d)
 
-	// With `ParseFloat`, this `64` tells how many bits of
-	// precision to parse.
-	f, _ := strconv.ParseFloat("1.234", 64)
-	fmt.Println(f)
+	u := strconv.parse_uint('789', 0, 64) or { panic(err) }
+	println(u)
 
-	// For `ParseInt`, the `0` means infer the base from
-	// the string. `64` requires that the result fit in 64
-	// bits.
-	i, _ := strconv.ParseInt("123", 0, 64)
-	fmt.Println(i)
+	k := strconv.atoi('135') or { panic(err) }
+	println(k)
 
-	// `ParseInt` will recognize hex-formatted numbers.
-	d, _ := strconv.ParseInt("0x1c8", 0, 64)
-	fmt.Println(d)
-
-	// A `ParseUint` is also available.
-	u, _ := strconv.ParseUint("789", 0, 64)
-	fmt.Println(u)
-
-	// `Atoi` is a convenience function for basic base-10
-	// `int` parsing.
-	k, _ := strconv.Atoi("135")
-	fmt.Println(k)
-
-	// Parse functions return an error on bad input.
-	_, e := strconv.Atoi("wat")
-	fmt.Println(e)
+	strconv.atoi('wat') or {
+		println(err)
+		return
+	}
 }

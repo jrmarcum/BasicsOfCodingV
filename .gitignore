@@ -1,0 +1,12 @@
+# Compiled binaries produced by v build
+*.exe
+*.out
+command-line-arguments
+command-line-flags
+command-line-subcommands
+
+# Temporary files created by lesson examples (lessons 58-60)
+tmp/
+
+# V compiler artifacts
+.v_cache/

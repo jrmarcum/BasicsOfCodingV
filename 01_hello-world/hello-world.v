@@ -1,6 +1,5 @@
-// Our first program will print the classic "hello world"
-// message. Here's the full source code.
+// Our first program will print the classic "hello world" message.
 
 fn main() {
-	println("hello world")
+	println('hello world')
 }

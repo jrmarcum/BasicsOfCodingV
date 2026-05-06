@@ -1,55 +1,37 @@
-// Slices are created from a parent array.
-// They are not distict types in V.
+// V dynamic arrays are equivalent to Go slices — they grow as needed.
 
 fn main() {
+	// Unlike Go's typed nil slices, an uninitialized V array is empty.
+	// Use `[]string{}` to create an empty dynamic array.
+	mut s := []string{}
+	println('uninit: ${s} ${s == []} ${s.len == 0}')
 
-	// define an array to slice from
-	s := [0,1,2,3,4,5]
-	println("s: $s \n")
+	// To create an empty array with non-zero length, use `len:`.
+	mut s2 := []string{len: 3}
+	println('emp: ${s2} len: ${s2.len}')
 
-	// Slices support a "slice" operator with the syntax
-	// `slice[low:high]`. For example, this gets a slice
-	// of the elements `s[2]`, `s[3]`, and `s[4]`.
-	mut l := s[2..5]
-	println("Slice 1 is index 2 up to but excluding index 5 of s:")
-	println("$l \n")
+	// We can set and get just like with arrays above.
+	s2[0] = 'a'
+	s2[1] = 'b'
+	s2[2] = 'c'
+	println('set: ${s2}')
+	println('get: ${s2[2]}')
 
-	// This slices up to (but excluding) `s[5]`.
-	l = s[..5]
-	println("Slice 2 is up to but excluding index 5 of s:")
-	println("$l \n")
+	println('len: ${s2.len}')
 
-	// And this slices up from (and including) `s[2]`.
-	l = s[2..]
-	println("Slice 3 is index 2 and up of s:")
-	println("$l \n")
+	// `<<` appends one or more new values to the array.
+	s2 << 'd'
+	s2 << 'e'
+	s2 << 'f'
+	println('apd: ${s2}')
 
-	// This adds a slice from an array to the end of an array.
-	l << s[..2]
-	println("Slice 4 is sl3 and up to but excluding index 2 of s:")
-	println("$l \n")
-	
-	// This is a parent and child array example with parent dependency
-	mut a := [0,1,2,3,4,5]
-	mut b := a[1..4]
-	println("Parent array 'a':")
-	println("$a \n")
-	println("Dependent Child array 'b' sliced from 'a':")
-	println("$b \n")
-	a.reverse_in_place()
-	println("Revised Parent array 'a':")
-	println("$a \n")
-	println("Revised Dependent Child array 'b':")
-	println("$b \n")
+	// Arrays can be sliced with `arr[low..high]`.
+	l := s2[2..5]
+	println('sl1: ${l}')
+	println('sl2: ${s2[..3]}')
+	println('sl3: ${s2[2..]}')
 
-	// This is an example of the child array becoming independent
-	// of the parent array
-	b << 6
-	a.reverse_in_place()
-	println("Revised Parent array 'a':")
-	println("$a \n")
-	println("Revised Independent Child array 'b':")
-	println("$b \n")
+	// Copy an array.
+	t := s2.clone()
+	println('cpy: ${t}')
 }
-
-// need to copy the portions here that really belong in the array section as they are not truely slice type operations

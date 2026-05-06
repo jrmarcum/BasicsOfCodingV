@@ -1,95 +1,46 @@
-// V has several useful functions for working with
-// *directories* in the file system.
+import os
 
-package main
-
-import (
-	"fmt"
-	"io/ioutil"
-	"os"
-	"path/filepath"
-)
-
-func check(e error) {
-	if e != nil {
-		panic(e)
+fn walk_all(path string) {
+	is_dir := os.is_dir(path)
+	println(' ${path} ${is_dir}')
+	if is_dir {
+		entries := os.ls(path) or { return }
+		for entry in entries {
+			walk_all(os.join_path(path, entry))
+		}
 	}
 }
 
-func main() {
+fn main() {
+	os.mkdir('subdir') or { panic(err) }
+	defer { os.rmdir_all('subdir') or {} }
 
-	// Create a new sub-directory in the current working
-	// directory.
-	err := os.Mkdir("subdir", 0755)
-	check(err)
+	os.write_file('subdir/file1', '') or { panic(err) }
 
-	// When creating temporary directories, it's good
-	// practice to `defer` their removal. `os.RemoveAll`
-	// will delete a whole directory tree (similarly to
-	// `rm -rf`).
-	defer os.RemoveAll("subdir")
+	os.mkdir_all('subdir/parent/child') or { panic(err) }
 
-	// Helper function to create a new empty file.
-	createEmptyFile := func(name string) {
-		d := []byte("")
-		check(ioutil.WriteFile(name, d, 0644))
+	os.write_file('subdir/parent/file2', '') or { panic(err) }
+	os.write_file('subdir/parent/file3', '') or { panic(err) }
+	os.write_file('subdir/parent/child/file4', '') or { panic(err) }
+
+	entries := os.ls('subdir/parent') or { panic(err) }
+	println('Listing subdir/parent')
+	for entry in entries {
+		is_dir := os.is_dir('subdir/parent/${entry}')
+		println('  ${entry} ${is_dir}')
 	}
 
-	createEmptyFile("subdir/file1")
+	os.chdir('subdir/parent/child') or { panic(err) }
 
-	// We can create a hierarchy of directories, including
-	// parents with `MkdirAll`. This is similar to the
-	// command-line `mkdir -p`.
-	err = os.MkdirAll("subdir/parent/child", 0755)
-	check(err)
-
-	createEmptyFile("subdir/parent/file2")
-	createEmptyFile("subdir/parent/file3")
-	createEmptyFile("subdir/parent/child/file4")
-
-	// `ReadDir` lists directory contents, returning a
-	// slice of `os.FileInfo` objects.
-	c, err := ioutil.ReadDir("subdir/parent")
-	check(err)
-
-	fmt.Println("Listing subdir/parent")
-	for _, entry := range c {
-		fmt.Println(" ", entry.Name(), entry.IsDir())
+	c := os.ls('.') or { panic(err) }
+	println('Listing subdir/parent/child')
+	for entry in c {
+		is_dir := os.is_dir('./${entry}')
+		println('  ${entry} ${is_dir}')
 	}
 
-	// `Chdir` lets us change the current working directory,
-	// similarly to `cd`.
-	err = os.Chdir("subdir/parent/child")
-	check(err)
+	os.chdir('../../..') or { panic(err) }
 
-	// Now we'll see the contents of `subdir/parent/child`
-	// when listing the *current* directory.
-	c, err = ioutil.ReadDir(".")
-	check(err)
-
-	fmt.Println("Listing subdir/parent/child")
-	for _, entry := range c {
-		fmt.Println(" ", entry.Name(), entry.IsDir())
-	}
-
-	// `cd` back to where we started.
-	err = os.Chdir("../../..")
-	check(err)
-
-	// We can also visit a directory *recursively*,
-	// including all its sub-directories. `Walk` accepts
-	// a callback function to handle every file or
-	// directory visited.
-	fmt.Println("Visiting subdir")
-	err = filepath.Walk("subdir", visit)
-}
-
-// `visit` is called for every file or directory found
-// recursively by `filepath.Walk`.
-func visit(p string, info os.FileInfo, err error) error {
-	if err != nil {
-		return err
-	}
-	fmt.Println(" ", p, info.IsDir())
-	return nil
+	println('Visiting subdir')
+	walk_all('subdir')
 }

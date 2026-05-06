@@ -1,45 +1,50 @@
-// Sometimes we'll want to sort a collection by something
-// other than its natural order. For example, suppose we
-// wanted to sort strings by their length instead of
-// alphabetically. Here's an example of custom sorts
-// in V.
+// Sometimes we'll want to sort a collection by something other than its
+// natural order. V's `sort_with_compare` method allows custom comparators.
 
-package main
+fn main() {
+	// Sort strings by their length.
+	mut fruits := ['peach', 'kiwi', 'apple']
+	fruits.sort_with_compare(fn (a &string, b &string) int {
+		if a.len < b.len {
+			return -1
+		} else if a.len > b.len {
+			return 1
+		}
+		return 0
+	})
+	println(fruits)
 
-import (
-	"fmt"
-	"sort"
-)
+	// We can also sort int arrays with a custom comparator.
+	// Here we sort in descending order.
+	mut ints := [7, 2, 4]
+	ints.sort_with_compare(fn (a &int, b &int) int {
+		if *a > *b {
+			return -1
+		} else if *a < *b {
+			return 1
+		}
+		return 0
+	})
+	println(ints)
 
-// In order to sort by a custom function in Go, we need a
-// corresponding type. Here we've created a `byLength`
-// type that is just an alias for the builtin `[]string`
-// type.
-type byLength []string
+	// For structs, sort by a specific field.
+	struct Person {
+		name string
+		age  int
+	}
 
-// We implement `sort.Interface` - `Len`, `Less`, and
-// `Swap` - on our type so we can use the `sort` package's
-// generic `Sort` function. `Len` and `Swap`
-// will usually be similar across types and `Less` will
-// hold the actual custom sorting logic. In our case we
-// want to sort in order of increasing string length, so
-// we use `len(s[i])` and `len(s[j])` here.
-func (s byLength) Len() int {
-	return len(s)
-}
-func (s byLength) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
-}
-func (s byLength) Less(i, j int) bool {
-	return len(s[i]) < len(s[j])
-}
-
-// With all of this in place, we can now implement our
-// custom sort by converting the original `fruits` slice
-// to `byLength`, and then use `sort.Sort` on that typed
-// slice.
-func main() {
-	fruits := []string{"peach", "banana", "kiwi"}
-	sort.Sort(byLength(fruits))
-	fmt.Println(fruits)
+	mut people := [
+		Person{ name: 'Jax', age: 37 },
+		Person{ name: 'TJ', age: 25 },
+		Person{ name: 'Alex', age: 72 },
+	]
+	people.sort_with_compare(fn (a &Person, b &Person) int {
+		if a.age < b.age {
+			return -1
+		} else if a.age > b.age {
+			return 1
+		}
+		return 0
+	})
+	println(people)
 }

@@ -1,34 +1,28 @@
-// `for` is v's only looping construct. Here are
-// some basic types of `for` loops.
+// `for` is V's only looping construct.
 
 fn main() {
-
-	// The most basic type, with a single condition.
+	// The most basic form uses a single condition (like a while loop).
 	mut i := 1
 	for i <= 3 {
 		println(i)
-		i = i + 1
+		i++
 	}
 
-	// A classic initial/condition/after `for` loop.
+	// A classic initial/condition/post `for` loop.
 	for j := 7; j <= 9; j++ {
 		println(j)
 	}
 
-	// `for` without a condition will loop repeatedly
-	// until you `break` out of the loop or `return` from
-	// the enclosing function.
+	// `for` without a condition loops forever until you `break`.
 	for {
-		println("loop")
+		println('loop')
 		break
 	}
 
-	// You can also `continue` to the next iteration of
-	// the loop.
-	for n := 0; n <= 5; n++ {
-		if n%2 == 0 {
-			continue
+	// You can `continue` to the next iteration with a condition.
+	for n in 0..6 {
+		if n % 2 == 0 {
+			println(n)
 		}
-		println(n)
 	}
 }
